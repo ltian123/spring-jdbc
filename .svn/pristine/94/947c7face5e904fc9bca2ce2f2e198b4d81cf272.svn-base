@@ -1,0 +1,45 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+	public static void main(String[] args) throws Exception {
+		ApplicationContext ac = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+		
+		
+		DataSource dataSource=(DataSource) ac.getBean("dataSource");
+		
+		Connection con=dataSource.getConnection();
+		
+		System.out.println(con);
+		System.out.println(con.hashCode());
+		
+		con.close();
+		
+		
+		
+		Connection con2=dataSource.getConnection();
+		
+		System.out.println(con2);
+		System.out.println(con2.hashCode());
+		
+		Connection con3=dataSource.getConnection();
+		
+		System.out.println(con3);
+		System.out.println(con3.hashCode());
+		
+		con2.close();
+		
+		
+		
+		
+		
+	}
+}

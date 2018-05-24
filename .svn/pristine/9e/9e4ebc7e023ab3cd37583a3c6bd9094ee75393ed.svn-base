@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:dataSource.properties"></property>
+	</bean>
+	
+<!--  dataSource  -->
+<!--	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--		<property name="driverClassName">-->
+<!--			<value>com.mysql.jdbc.Driver</value>-->
+<!--		</property>-->
+<!--		<property name="url">-->
+<!--			<value>jdbc:mysql://127.0.0.1:3306/spring?useUnicode=true&amp;characterEncoding=utf8</value>-->
+<!--		</property>-->
+<!--		<property name="username">-->
+<!--			<value>root</value>-->
+<!--		</property>-->
+<!--		<property name="password">-->
+<!--			<value>123</value>-->
+<!--		</property>-->
+<!--	</bean>-->
+
+
+<!--	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--		<property name="driverClassName" value="${jdbc.driverClassName}"></property>-->
+<!--		<property name="url" value="${jdbc.url}"></property>-->
+<!--		<property name="username" value="${jdbc.username}"></property>-->
+<!--		<property name="password" value="${jdbc.password}"></property>-->
+<!--	</bean>-->
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="initialSize" value="1"></property>
+		<property name="maxActive" value="1"></property>
+		<property name="maxWait" value="5000"></property>
+	</bean>
+
+<!--	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->
+<!--		<property name="jndiName" value="xxx"></property>-->
+<!--	</bean>-->
+	
+<!--  jdbcTemplate	-->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	
+<!--  dao	-->
+	<bean id="userDao" class="dao.impl.UserDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+
+	<bean id="userDao2" class="dao.impl.UserDaoImpl2">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+
+
+
+
+
+	
+
+</beans>
